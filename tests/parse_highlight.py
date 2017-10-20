@@ -17,6 +17,7 @@ def searchify():
                 literal = result.group()
                 highlight = line.replace(literal, '*{}*'.format(literal))
                 foundLines.append(highlight)
+                return(foundLines)
 
 
 searchify()
