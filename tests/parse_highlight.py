@@ -1,3 +1,4 @@
+"""Searches a text for a given regular expression"""
 import argparse
 import re
 
