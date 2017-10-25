@@ -10,7 +10,7 @@ def searchify(filePath, searchTerm):
                 literal = result.group()
                 highlight = line.replace(literal, '*{}*'.format(literal))
                 foundLines.append(highlight)
-                return(foundLines)
+        return(foundLines)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Search file for regex')
