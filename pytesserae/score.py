@@ -5,7 +5,8 @@ import math
 def vanilla(
     matching_terms,
     source_distance, target_distance,
-    source_counts, target_counts
+    source_size, target_size,
+    source_counts, target_counts,
 ):
     """Calculates the Tesserae score between from_source and from_target
 
@@ -14,9 +15,15 @@ def vanilla(
         * source_distance, target_distance :: int
             Distance between least frequent matching terms for source and
             target, respectively
+        * source_size, target_size :: int
+            Total number of tokens in the entirety of the works of source and
+            target, respectively
         * source_counts, target_counts :: {str: int}
             A dictionary of word counts to consult in looking up frequency
             information
+
+    Note that frequency refers to the count divided by the total number of
+    tokens.
 
     score = ln (
         (
@@ -32,7 +39,7 @@ def vanilla(
     """
     return math.log(
         (
-            sum([1 / target_counts[t] for t in matching_terms]) +
-            sum([1 / source_counts[s] for s in matching_terms])
+            sum([1 / (target_counts[t]/target_size) for t in matching_terms]) +
+            sum([1 / (source_counts[s]/source_size) for s in matching_terms])
         ) / (target_distance + source_distance)
     )
