@@ -21,8 +21,12 @@ if keypress == 'h':
 elif keypress == 'l':
     output = latex_output.latex(matchList)
     with open('SearchResult.tex', 'w') as f:
+        f.write("""\documentclass{article}
+        \\usepackage{color}
+        \\begin{document}\n""")
         for l in output:
-            f.write(l)
+            f.write(l + '\\\\')
+        f.write("""\end{document}""")
 
 else:
     print('Error!')
