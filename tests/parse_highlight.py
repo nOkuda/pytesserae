@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument("inputFile", help="name of file to search")
     parser.add_argument("search", help="expression to search for")
     args = parser.parse_args()
-    file = args.inputFile
+    text = args.inputFile
     search = args.search
         
-    searchify(file, search)
+    searchify(text, search)
