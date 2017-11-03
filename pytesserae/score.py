@@ -18,8 +18,8 @@ def vanilla(
             A dictionary of word counts to consult in looking up frequency
             information
 
-    Note that frequency for some word x in text y refers to the number of times
-    x appears in y divided by the total number of tokens in y.
+    Note that frequency for some word x in some text y refers to the number of
+    times x appears in y divided by the total number of tokens in y.
 
     score = ln (
         (
