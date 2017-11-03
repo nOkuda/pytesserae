@@ -14,9 +14,6 @@ def vanilla(
         * source_distance, target_distance :: int
             Distance between least frequent matching terms for source and
             target, respectively
-        * source_size, target_size :: int
-            Total number of tokens in the entirety of the works of source and
-            target, respectively
         * source_counts, target_counts :: {str: int}
             A dictionary of word counts to consult in looking up frequency
             information
@@ -44,3 +41,59 @@ def vanilla(
             sum([1 / (source_counts[s]/source_size) for s in matching_terms])
         ) / (target_distance + source_distance)
     )
+
+
+def _get_two_lowest(matching_terms, counts):
+    """Gets two lowest frequency matching terms
+
+        * matching_terms :: {str}
+            The set of matching words
+        * counts :: {str: int}
+            A dictionary of word counts for the text from which the chunk
+            comes
+
+    Assumes that len(matching_terms) >= 2
+    """
+    if len(matching_terms) == 2:
+        return tuple(matching_terms)
+
+    match_tuple = tuple(matching_terms)
+    # tuple of (term, count)
+    lowest = (match_tuple[0], counts[match_tuple[0]])
+    next_lowest = (match_tuple[1], counts[match_tuple[1]])
+    if lowest[1] > next_lowest[1]:
+        tmp = lowest
+        lowest = next_lowest
+        next_lowest = tmp
+    for term in match_tuple[2:]:
+        term_count = counts[term]
+        if term_count < lowest[1]:
+            next_lowest = lowest
+            lowest = (term, term_count)
+        elif term_count < next_lowest[1]:
+            next_lowest = (term, term_count)
+    return lowest[0], next_lowest[0]
+
+
+def find_distance(matching_terms, chunk, counts):
+    """Calculates distance between matching terms in given chunk
+
+        * matching_terms :: {str}
+            The set of matching words
+        * chunk :: [str]
+            A chunk of text
+        * counts :: {str: int}
+            A dictionary of word counts for the text from which the chunk
+            comes
+    """
+    if len(matching_terms) == 1:
+        # handle case where same term shows up multiple times in chunk
+        term = tuple(matching_terms)[0]
+        first = chunk.index(term)
+        second = chunk.index(term, first+1)
+        return second - first
+
+    term1, term2 = _get_two_lowest(matching_terms, counts)
+    first = chunk.index(term1)
+    second = chunk.index(term2)
+    return abs(second - first)
