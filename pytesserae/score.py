@@ -5,7 +5,6 @@ import math
 def vanilla(
     matching_terms,
     source_distance, target_distance,
-    source_size, target_size,
     source_counts, target_counts,
 ):
     """Calculates the Tesserae score between from_source and from_target
@@ -37,6 +36,8 @@ def vanilla(
         * d_t = target_distance
         * d_s = source_distance
     """
+    target_size = sum([v for v in target_counts.values()])
+    source_size = sum([v for v in source_counts.values()])
     return math.log(
         (
             sum([1 / (target_counts[t]/target_size) for t in matching_terms]) +
