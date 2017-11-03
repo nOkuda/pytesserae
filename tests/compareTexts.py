@@ -18,14 +18,20 @@ def compare(source, target):
 
     # delete stop words from both lists?
 
+    # delete repeated words
+    token1 = set(token1)
+    token2 = set(token2)
+
     matches = []
     # compare each element in token1 with elements in token2, return matches
     for x in token1:
         for y in token2:
             if(x == y)
-               # somehow connect x and y back to original contexts?
-               # use parse_highlight to mark each match in both contexts
-               # add both marked lines to match list
+               matches.append(x)
+            # give more weight to rarer word and longer phrase matches
+            # connect matches back to original contexts
+            # use parse_highlight to mark each match in both contexts
+            # add both marked lines to match list
 
     return(matches)
 
