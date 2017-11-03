@@ -38,7 +38,7 @@ def test_get_two_lowest_more():
 
 
 def test_find_distance():
-    """Text find_distance when there are two matching terms"""
+    """Test find_distance when there are two matching terms"""
     matching_terms = {'a', 'b'}
     chunk = ['a', 'b']
     counts = {'a': 20, 'b': 25}
@@ -47,7 +47,7 @@ def test_find_distance():
 
 
 def test_find_distance_more():
-    """Text find_distance when there are more than two matching terms"""
+    """Test find_distance when there are more than two matching terms"""
     matching_terms = {'a', 'b', 'c'}
     chunk = ['a', 'c', 'b']
     counts = {'a': 20, 'b': 25, 'c': 30}
@@ -56,7 +56,7 @@ def test_find_distance_more():
 
 
 def test_find_distance_one():
-    """Text find_distance when there is one matching term"""
+    """Test find_distance when there is one matching term"""
     matching_terms = {'a'}
     chunk = ['a', 'b', 'a']
     counts = {'a': 20, 'b': 25}
