@@ -54,9 +54,6 @@ def _get_two_lowest(matching_terms, counts):
 
     Assumes that len(matching_terms) >= 2
     """
-    if len(matching_terms) == 2:
-        return tuple(matching_terms)
-
     match_tuple = tuple(matching_terms)
     # tuple of (term, count)
     lowest = (match_tuple[0], counts[match_tuple[0]])
@@ -75,6 +72,15 @@ def _get_two_lowest(matching_terms, counts):
     return lowest[0], next_lowest[0]
 
 
+def _get_indices(term, chunk):
+    """Get indices where term appears in chunk"""
+    positions = []
+    for i, token in enumerate(chunk):
+        if token == term:
+            positions.append(i)
+    return positions
+
+
 def find_distance(matching_terms, chunk, counts):
     """Calculates distance between matching terms in given chunk
 
@@ -85,15 +91,31 @@ def find_distance(matching_terms, chunk, counts):
         * counts :: {str: int}
             A dictionary of word counts for the text from which the chunk
             comes
+
+    When there is only one matching term, the distance should be the smallest
+    between instances of the matching term in chunk.
+
+    Where there is more than one matching term, the distance should be the
+    smallest between the instances of the lowest frequency matching term and
+    the instances of the second lowest frequency matching term.
     """
     if len(matching_terms) == 1:
         # handle case where same term shows up multiple times in chunk
         term = tuple(matching_terms)[0]
-        first = chunk.index(term)
-        second = chunk.index(term, first+1)
-        return second - first
+        positions = _get_indices(term, chunk)
+        # if this becomes a bottleneck, there is always numpy.diff
+        inter_position_diffs = [
+            j - i for i, j in zip(positions[:-1], positions[1:])]
+        return min(inter_position_diffs)
 
     term1, term2 = _get_two_lowest(matching_terms, counts)
-    first = chunk.index(term1)
-    second = chunk.index(term2)
-    return abs(second - first)
+    term1_positions = _get_indices(term1, chunk)
+    term2_positions = _get_indices(term2, chunk)
+    # following lines might be improved with better algorithm
+    min_dist = abs(term1_positions[0] - term2_positions[0])
+    for pos1 in term1_positions:
+        for pos2 in term2_positions:
+            cur_dist = abs(pos2 - pos1)
+            if cur_dist < min_dist:
+                min_dist = cur_dist
+    return min_dist

@@ -46,6 +46,16 @@ def test_find_distance():
     assert distance == 1
 
 
+def test_find_distance_later():
+    """Test find_distance when there are two matching terms and closest
+    distance not in first pair of found terms"""
+    matching_terms = {'a', 'b'}
+    chunk = ['a', 'c', 'b', 'a']
+    counts = {'a': 20, 'b': 25}
+    distance = score.find_distance(matching_terms, chunk, counts)
+    assert distance == 1
+
+
 def test_find_distance_more():
     """Test find_distance when there are more than two matching terms"""
     matching_terms = {'a', 'b', 'c'}
@@ -62,3 +72,13 @@ def test_find_distance_one():
     counts = {'a': 20, 'b': 25}
     distance = score.find_distance(matching_terms, chunk, counts)
     assert distance == 2
+
+
+def test_find_distance_one_later():
+    """Test find_distance when there is one matching term and closest distance
+    not in first pair of found terms"""
+    matching_terms = {'a'}
+    chunk = ['a', 'b', 'a', 'a']
+    counts = {'a': 20, 'b': 25}
+    distance = score.find_distance(matching_terms, chunk, counts)
+    assert distance == 1
