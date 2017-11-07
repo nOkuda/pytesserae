@@ -8,33 +8,33 @@ def compare(source, target):
     with open(source, 'r') as f:
         token1 = []
         for line in f:
-            token1.append(line.split(str=r"\b"))
+            tokens = line.split(" ")
+            for t in tokens:
+                if t not in token1:
+                    token1.append(t)
 
     # create token list from target text
     with open(target, 'r') as g:
         token2 = []
         for line in g:
-            token2.append(line.split(str=r"\b"))
+            tokens = line.split(" ")
+            for t in tokens:
+                if t not in token2:
+                    token2.append(t)
 
     # delete stop words from both lists?
-
-    # delete repeated words
-    token1 = set(token1)
-    token2 = set(token2)
 
     matches = []
     # compare each element in token1 with elements in token2, return matches
     for x in token1:
-        for y in token2:
-            if(x == y)
-               matches.append(x)
+        if x in token2:
+            matches.append(x)
             # give more weight to rarer word and longer phrase matches
             # connect matches back to original contexts
             # use parse_highlight to mark each match in both contexts
             # add both marked lines to match list
 
-    return(matches)
-
+    print(matches)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compare two texts')
