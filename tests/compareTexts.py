@@ -8,6 +8,10 @@ def compare(source, target):
     with open(source, 'r') as f:
         token1 = []
         for line in f:
+            line = line.lower()
+            line = re.sub("^<.*\>", "", line)  #removes tess line indexing
+            line = re.sub("[-\t\n]", "", line)
+            line = re.sub("[^\w\s]", " ", line)
             tokens = line.split(" ")
             for t in tokens:
                 if t not in token1:
@@ -17,6 +21,10 @@ def compare(source, target):
     with open(target, 'r') as g:
         token2 = []
         for line in g:
+            line = line.lower()
+            line = re.sub("^<.*\>", "", line)  #removes tess line indexing
+            line = re.sub("[-\t\n]", "", line)
+            line = re.sub("[^\w\s]", " ", line)
             tokens = line.split(" ")
             for t in tokens:
                 if t not in token2:
