@@ -12,6 +12,7 @@ def compare(source, target):
             line = re.sub("^<.*\>", "", line)  #removes tess line indexing
             line = re.sub("[-\t\n]", "", line)
             line = re.sub("[^\w\s]", " ", line)
+            #line = re.sub("^[\x20-\x7E]", "", line) # removes punctuation
             tokens = line.split(" ")
             for t in tokens:
                 if t not in token1:
@@ -22,9 +23,10 @@ def compare(source, target):
         token2 = []
         for line in g:
             line = line.lower()
-            line = re.sub("^<.*\>", "", line)  #removes tess line indexing
+            line = re.sub("^<.*\>", "", line)
             line = re.sub("[-\t\n]", "", line)
             line = re.sub("[^\w\s]", " ", line)
+            #line = re.sub("^[\x20-\x7E]", "", line)
             tokens = line.split(" ")
             for t in tokens:
                 if t not in token2:
