@@ -13,11 +13,12 @@ class Tess:
         
 
 def compare(source, target):
+    #identify stop words
     topsource = tf.readfile(source)
     toptarget = tf.readfile(target)
     toptenSource = tf.topten(topsource)
     toptenTarget = tf.topten(toptarget)
-    # remove punctuation/capitalization?
+
     # create token list from source text
     with open(source, 'r') as f:
         token1 = []
@@ -39,7 +40,6 @@ def compare(source, target):
                             token1.append(indexT)
 
     # create token list from target text
-    
     with open(target, 'r') as g:
         token2 = []
         for line in g:
@@ -58,11 +58,12 @@ def compare(source, target):
                         indexT = Tess(t, tag, 0)
                         if indexT not in token2:
                             token2.append(indexT)
-                            
-    # delete stop words from both lists?
+
+    # compare each element in token1 with elements in token2, return matches
     matches1 = []
     matches2 = []
-    # compare each element in token1 with elements in token2, return matches
+
+    # lemmatize every x.word in token1 and token2
     for x in token1:
         for y in token2:
             if x.word == y.word:
@@ -70,8 +71,7 @@ def compare(source, target):
                     matches1.append(x)
                 if y not in matches2:
                     matches2.append(y)
-            # give more weight to rarer word and longer phrase matches
-            # connect matches back to original contexts
+            # score.py: rank matches
             # use parse_highlight to mark each match in both contexts
             # add both marked lines to match list
     for m in matches1 and matches2:
