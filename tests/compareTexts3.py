@@ -2,6 +2,9 @@ import argparse
 import re
 import math
 import tfidf as tf
+import cltk
+from cltk.stem.lemma import LemmaReplacer
+lemmatizer = LemmaReplacer('latin')
 
 class Tess:
     """A class for tokens and lines of .tess files"""
@@ -14,7 +17,7 @@ class Tess:
 
 def wordlist(text):
     #identify stop words
-    topsource = tf.readfile(source)
+    topsource = tf.readfile(text)
     toptenSource = tf.topten(topsource)
 
     # create token list from source text
@@ -29,13 +32,12 @@ def wordlist(text):
             line = re.sub("[\-\t\n]", "", line)
             line = re.sub("[^\w\s]", " ", line)
             line = re.sub("[^A-Za-z ]", "", line) # removes punctuation
-            tokens = line.split(" ")
+            tokens = lemmatizer.lemmatize(line.split(" "))
             for t in tokens:
                 if t not in toptenSource:
                     if re.search("[A-Za-z ]", t):
                         indexT = Tess(t, tag, 0)
-                        if indexT not in tessTokens:
-                            tessTokens.append(indexT)
+                        tessTokens.append(indexT)
         return(tessTokens)
 
     # lemmatize every x.word in token1 and token2
@@ -47,7 +49,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generates word list')
     parser.add_argument("text", help="source text")
     args = parser.parse_args()
-    source = args.text
+    intext = args.text
     
 
-    wordlist(source)
+    wordlist(intext)
