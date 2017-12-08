@@ -36,7 +36,7 @@ def wordlist(text):
             line = re.sub("[\-\t\n]", "", line)
             line = re.sub("[^\w\s]", " ", line)
             line = re.sub("[^A-Za-z ]", "", line) # removes punctuation
-            tokens = lemmatizer.lemmatize(line.split(" "))
+            tokens = lemmatizer.lemmatize(line.split())
             for t in tokens:
                 if t not in toptenSource:
                     if re.search("[A-Za-z ]", t):

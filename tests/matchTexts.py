@@ -11,7 +11,7 @@ def compare(source, target):
             if x.word == y.word:
                 matches.append(x)
                 matches.append(y)
-    return(matches)
+    print(matches)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compare two texts')
