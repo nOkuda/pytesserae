@@ -1,5 +1,6 @@
 """Converts the output of the search function to html code"""
 import re
+import argparse
 
 def html(matchList):
     output = []
@@ -13,4 +14,13 @@ def html(matchList):
         highlight = highlight.replace("*", "")
         output.append(highlight)
 
-    return output
+    return(output)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Format list of tokens in html')
+    parser.add_argument("tokens", help="list of tokens")
+    args = parser.parse_args()
+    matches = args.tokens
+
+    html(matches)
+    print(output)

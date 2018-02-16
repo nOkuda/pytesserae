@@ -25,8 +25,7 @@ def wordlist(text):
             if result:
                 lineID = result.group()
             line = re.sub("^<.*\>", "", line)  #remove line ID
-            line = re.sub("[\-\t\n]", "", line) #are these 2 lines necessary?
-            line = re.sub("[^\w\s]", " ", line)
+            line = re.sub("[\s+]", " ", line)
             line = re.sub("[^A-Za-z ]", "", line) # removes punctuation
             tessTokens=line.split()
             for word in tessTokens:
