@@ -11,7 +11,7 @@ setup(
         'Topic :: Scientific/Engineering :: Information Analysis',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.5',
-    ]
+    ],
     keywords='Tesserae',
     python_requires='~=3.5',
     packages=find_packages(exclude=['examples', 'tests']),
