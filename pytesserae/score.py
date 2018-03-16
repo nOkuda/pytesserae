@@ -7,16 +7,27 @@ def vanilla(
     source_distance, target_distance,
     source_counts, target_counts,
 ):
-    """Calculates the Tesserae score between from_source and from_target
+    """Calculates the Tesserae score between source and target units
 
-        * matching_terms :: {str}
-            A set of words found to match between the source and target
-        * source_distance, target_distance :: int
-            Distance between least frequent matching terms for source and
-            target, respectively
-        * source_counts, target_counts :: {str: int}
-            A dictionary of word counts to consult in looking up frequency
-            information
+    Parameters
+    ----------
+    matching_terms : {str}
+        A set of words found to match between the source and target
+    source_distance, target_distance : int
+        Distance between least frequent matching terms for source and
+        target, respectively
+    source_counts, target_counts : {str: int}
+        A dictionary of word counts to consult in looking up frequency
+        information
+
+    Returns
+    -------
+    float
+        The Tesserae score between source and target units
+
+    Notes
+    -----
+    The scoring function is defined in [1]_.
 
     Note that frequency for some word x in some text y refers to the number of
     times x appears in y divided by the total number of tokens in y.
@@ -32,6 +43,44 @@ def vanilla(
         * f(s) is the frequency of a matching term in the source
         * d_t = target_distance
         * d_s = source_distance
+
+    References
+    ----------
+    .. [1] N. Coffee, C. Forstall, T. Buck, K. Roache, S. Jacobson, "Modeling
+       the Scholars: Detecting Intertextuality through Enhanced Word-Level
+       N-Gram Matching," Digital Scholarship in the Humanities vol. 30.4, pp.
+       503-515, 2014.
+
+    Examples
+    --------
+    Begin with a unit from the source and from the target.
+
+    >>> source_chunk = ['a', 'b']
+    >>> target_chunk = ['a', 'c', 'b']
+
+    Consider the terms that match across both units.
+
+    >>> matching_terms = {'a', 'b'}
+
+    Count statistics for source and target texts.
+
+    >>> source_counts = {'a': 10, 'b': 50, 'c': 25}
+    >>> target_counts = {'a': 4, 'b': 73, 'c': 15}
+
+    Calculate distance information.
+
+    >>> source_distance = score.find_distance(
+    ...     matching_terms, source_chunk, source_counts)
+    >>> target_distance = score.find_distance(
+    ...     matching_terms, target_chunk, target_counts)
+
+    Now score the units.
+
+    >>> score.vanilla(
+    ...     matching_terms, source_distance, target_distance, source_counts,
+    ...     target_counts)
+    2.4411948928528475
+
     """
     target_size = sum([v for v in target_counts.values()])
     source_size = sum([v for v in source_counts.values()])
