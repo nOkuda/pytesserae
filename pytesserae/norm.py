@@ -2,7 +2,7 @@
 
 Given a word form, we would like to process it into a canonical form against
 which we can compare equivalently with other words that have slightly different
-forms.  For example, "Ab" and "ab" should match, despite capitlization
+forms.  For example, "Ab" and "ab" should match, despite capitalization
 differences.
 
 """
