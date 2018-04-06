@@ -15,8 +15,8 @@ def _parse_args():
 
 def _run():
     args = _parse_args()
-    source_tokens = handler.wordlist(args.source)
-    target_tokens = handler.wordlist(args.target)
+    source_tokens = handler.word_hoard(args.source)
+    target_tokens = handler.word_hoard(args.target)
     for tokens1 in source_tokens:
         for tokens2 in target_tokens:
             matches = td.matchify(tokens1, tokens2)
@@ -26,6 +26,3 @@ def _run():
 
 if __name__ == '__main__':
     _run()
-
-
-
