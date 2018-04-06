@@ -16,7 +16,7 @@ def _run():
     tokens = wordlist(args.text)
     print(tokens)
 
-def wordlist(text):
+def word_hoard(text):
     #identify stop words
     topsource = tf.readfile(text)
     toptenSource = tf.topten(topsource)
