@@ -14,5 +14,6 @@ setup(
     ],
     keywords='Tesserae',
     python_requires='~=3.5',
-    packages=find_packages(exclude=['examples', 'tests']),
+    packages=find_packages(exclude=['examples', 'tests', 'scripts']),
+    include_package_data=True,
 )
