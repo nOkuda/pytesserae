@@ -3,6 +3,7 @@
 Generates lemmatization data
 
 """
+import gzip
 import json
 import os
 
@@ -35,8 +36,9 @@ def _run():
         'la.lexicon.csv',
         pytesserae.norm.normalize_latin,
     )
-    with open(os.path.join(drop_point, 'latin.lemma.json'), 'w') as ofh:
-        ofh.write(json.dumps(latin_lookup))
+    with gzip.open(os.path.join(
+            drop_point, 'latin.lemma.json.gz'), 'wb') as ofh:
+        ofh.write(json.dumps(latin_lookup).encode('utf-8'))
     """
     greek_lookup = _generate_lookup(
         os.path.join(args.csv_dir, 'grc.lexicon.csv'),

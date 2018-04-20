@@ -2,6 +2,7 @@
 
 Given a word form, we would like to know its possible lemmata.
 """
+import gzip
 import json
 import os
 
@@ -21,10 +22,10 @@ def _get_data(language):
     {str: {str: bool}}
         A mapping of word forms to possible lemmata
     """
-    with open(os.path.join(
+    with gzip.open(os.path.join(
             os.path.dirname(os.path.realpath(__file__)),
-            language+'.lemma.json')) as ifh:
-        return json.load(ifh)
+            language+'.lemma.json.gz'), 'rb') as ifh:
+        return json.loads(ifh.read().decode('utf-8'))
 
 
 _LATIN_LOOKUP = _get_data('latin')
