@@ -18,14 +18,13 @@ def _get_data(language):
 
     Returns
     -------
-    {str: {str}}
+    {str: {str: bool}}
         A mapping of word forms to possible lemmata
     """
     with open(os.path.join(
-            os.path.realpath(__file__), language+'.lemma.json')) as ifh:
-        json.load(ifh)
-        # TODO finish implementing
-    return {}
+            os.path.dirname(os.path.realpath(__file__)),
+            language+'.lemma.json')) as ifh:
+        return json.load(ifh)
 
 
 _LATIN_LOOKUP = _get_data('latin')
