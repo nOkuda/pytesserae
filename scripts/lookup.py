@@ -39,14 +39,13 @@ def _run():
     with gzip.open(os.path.join(
             drop_point, 'latin.lemma.json.gz'), 'wb') as ofh:
         ofh.write(json.dumps(latin_lookup).encode('utf-8'))
-    """
     greek_lookup = _generate_lookup(
-        os.path.join(args.csv_dir, 'grc.lexicon.csv'),
-        normalize_greek,
+        'grc.lexicon.csv',
+        pytesserae.norm.normalize_greek,
     )
-    with open('greek_dict.json', 'w') as ofh:
-        ofh.write(json.dumps(greek_lookup))
-    """
+    with gzip.open(os.path.join(
+            drop_point, 'greek.lemma.json.gz'), 'wb') as ofh:
+        ofh.write(json.dumps(greek_lookup).encode('utf-8'))
 
 
 if __name__ == '__main__':
